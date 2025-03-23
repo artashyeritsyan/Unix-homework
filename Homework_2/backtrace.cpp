@@ -30,15 +30,15 @@ int input() {
 
 void stack_dump(int depth, std::ostream& os) {
     void* buffer[depth];
-    int nptrs = backtrace(buffer, depth);
+    int size = backtrace(buffer, depth);
     
-    char** strings = backtrace_symbols(buffer, nptrs);
+    char** strings = backtrace_symbols(buffer, size);
     if (strings == nullptr) {
         os << "Error: backtrace_symbols\n";
         return;
     }
 
-    for (int i = 1; i < nptrs; ++i) {
+    for (int i = 1; i < size; ++i) {
         std::string symbol(strings[i]);
         size_t begin = symbol.find('(');
         size_t end = symbol.find('+');
